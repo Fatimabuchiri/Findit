@@ -1,6 +1,6 @@
 #Convert music files to .wav format and store in the same folder
 
-from pydub import AudioSegment
+from pydub import AudioSegment # type: ignore
 import os
 
 #directory of input songs

@@ -274,7 +274,7 @@ class Findit():
 				most_notes = deltas[1]
 				best_song = song_name
 
-		print("\n***Best song:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+		print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
 
 		return (best_song, coherent_notes[best_song][0])
 
@@ -282,9 +282,9 @@ class Findit():
 if __name__ == "__main__":
 
 	#make Findit object
-	app = Findit(audio_path='audio/', data_path='data/')
+	app = Findit(audio_path='Findit/audio/', data_path='Findit/data/')
 	#create song object from input path
-	song = app.create_song('test/A_Sky_Full_of_Stars_12_3.wav', try_dumped=True, is_target=True)
+	song = app.create_song('Findit/test/001 - Al-Fatihah(Al - Sudais).wav', try_dumped=True, is_target=True)
 	#Find best match
 	app.compare_song(song)
 

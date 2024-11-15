@@ -61,14 +61,25 @@ class Song():
 		if cur_sampling_freq != self.sampling_freq:
 			print("Resampling from", cur_sampling_freq, 'to', self.sampling_freq)
 			newname = filename.split('.')[-2]+'_resampled.wav'
-			subprocess.call(['./sox', filename, '-r', str(self.sampling_freq), newname])
+			subprocess.call(['sox', filename, '-r', str(self.sampling_freq), newname])
 			cur_sampling_freq, self.data = wavfile.read(newname)
 
+			#if  os.path.exists(filename):
+				#os.remove(filename)  # Delete the file if it already exists
+			
+
+				#os.rename(newname, filename)
+
 			#delete the resampled file since the target audio is not to be stored for further use
-			if is_target:
+			if os.path.exists(filename):
 				os.remove(newname)
 			else:
+
 				os.rename(newname, filename)
+
+			
+
+			
 
 		#normalise
 		self.data = self.data/16284
