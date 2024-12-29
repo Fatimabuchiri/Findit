@@ -21,7 +21,7 @@ def convert_mp3_to_wav(mp3_file_path, wav_file_path):
 
 # Example usage
 if __name__ == "__main__":
-    mp3_path = "Findit/test/93 - Adh-Dhuha (the Forenoon).mp3"  # Replace with your MP3 file path
-    wav_path = "Findit/test/93 - Adh-Dhuha (the Forenoon).wav"  # Replace with your desired WAV file path
+    mp3_path = "Findit/test/92 - Al-Layl (the Night).mp3"  # Replace with your MP3 file path
+    wav_path = "Findit/test/92 - Al-Layl (the Night).wav"  # Replace with your desired WAV file path
     convert_mp3_to_wav(mp3_path, wav_path)
 

@@ -241,15 +241,17 @@ class Findit():
 
 		#We could end the search and declare 'no match found' or look for the best option by sorting the number of common notes in descending order and trying the best three
 		if len(songs_to_consider) == 0:
-			print("Couldn't reach threshold. Weak suggestions:")
+			#print("Couldn't reach threshold. Weak suggestions:")
 			sorted_x = sorted(common_targets.items(), key=operator.itemgetter(1), reverse=True)
 			songs_to_consider = [x[0] for x in sorted_x[:3]]
+			#print(sorted_x)
+			#print(songs_to_consider)
 		
 		#Check for time coherency at this stage. Find a delta per song which has maximizes number of instances of:
 		#delta = time of anchor in song - time of anchor in input clip
 		final_songs_data = self.filter_database_song(songs_to_consider)
 		coherent_notes = {}
-		# print(songs_to_consider)
+		#print(final_songs_data)
 		
 		for song_name, sdict in final_songs_data.items():
 			deltas = {}
@@ -274,9 +276,27 @@ class Findit():
 				most_notes = deltas[1]
 				best_song = song_name
 
-		print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
-
-		return (best_song, coherent_notes[best_song][0])
+		if coherent_notes[best_song][0] == 0.0 and len(songs_to_consider) > 1:
+			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			print("\n Only the Qari was matched and not the surah",'\n')
+				
+		elif coherent_notes[best_song][0] > 10.0:
+			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			print("\n only the Qari was matched and not the surah",'\n')
+			
+		elif coherent_notes[best_song][0] == 0.0:
+			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			print("\n Both the Qari and surah were matched",'\n')
+		
+		elif (coherent_notes[best_song][0] > 1.0 and coherent_notes[best_song][0] < 5.0) or (coherent_notes[best_song][0] < 0.0):
+			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			print("\n Match not found",'\n')
+			
+		else:
+			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			
+			#return (best_song, coherent_notes[best_song][0]) 
+			
 
 
 if __name__ == "__main__":
@@ -284,7 +304,7 @@ if __name__ == "__main__":
 	#make Findit object
 	app = Findit(audio_path='Findit/audio/', data_path='Findit/data/')
 	#create song object from input path
-	song = app.create_song('Findit/test/93 - Adh-Dhuha (the Forenoon).wav', try_dumped=True, is_target=True)
+	song = app.create_song('Findit/test/92 - Al-Layl (the Night).wav', try_dumped=True, is_target=True)
 	#Find best match
 	app.compare_song(song)
 
