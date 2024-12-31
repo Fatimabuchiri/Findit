@@ -3,6 +3,8 @@ import matplotlib.pyplot as plt
 import os
 import pickle
 import operator
+import pyaudio
+import wave
 
 from Song import Song
 """
@@ -241,7 +243,7 @@ class Findit():
 
 		#We could end the search and declare 'no match found' or look for the best option by sorting the number of common notes in descending order and trying the best three
 		if len(songs_to_consider) == 0:
-			#print("Couldn't reach threshold. Weak suggestions:")
+			print("Couldn't reach threshold. Weak suggestions:")
 			sorted_x = sorted(common_targets.items(), key=operator.itemgetter(1), reverse=True)
 			songs_to_consider = [x[0] for x in sorted_x[:3]]
 			#print(sorted_x)
@@ -301,10 +303,49 @@ class Findit():
 
 if __name__ == "__main__":
 
+	#Parameters
+	FORMAT = pyaudio.paInt16
+	CHANNELS = 1
+	RATE = 44100
+	CHUNK = 1024
+	RECORD_SECONDS = 15
+	OUTPUT_FILENAME = "Findit/test/recorded_audio.wav"
+
+	#Initialize PyAudio
+	audio = pyaudio.PyAudio()
+
+	#Open stream
+	stream = audio.open(format=FORMAT, channels=CHANNELS,
+                    rate=RATE, input=True,
+                    frames_per_buffer=CHUNK)
+	
+	print("Recording...")
+	frames = []
+	
+	#Record audio
+	for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+		data = stream.read(CHUNK)
+		frames.append(data)
+
+	print("Recording finished.")
+
+	#Stop and close the stream
+	stream.stop_stream()
+	stream.close()
+	audio.terminate()
+
+	#Save the recorded data as a WAV file
+	wf = wave.open(OUTPUT_FILENAME, 'wb')
+	wf.setnchannels(CHANNELS)
+	wf.setsampwidth(audio.get_sample_size(FORMAT))
+	wf.setframerate(RATE)
+	wf.writeframes(b''.join(frames))
+	wf.close()
+
 	#make Findit object
 	app = Findit(audio_path='Findit/audio/', data_path='Findit/data/')
 	#create song object from input path
-	song = app.create_song('Findit/test/97 - Al-Qadar (the Night of Decree)(AL-Khalaf).wav', try_dumped=True, is_target=True)
+	song = app.create_song('Findit/test/recorded_audio.wav', try_dumped=True, is_target=True)
 	#Find best match
 	app.compare_song(song)
 
