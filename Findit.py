@@ -304,7 +304,7 @@ if __name__ == "__main__":
 	#make Findit object
 	app = Findit(audio_path='Findit/audio/', data_path='Findit/data/')
 	#create song object from input path
-	song = app.create_song('Findit/test/92 - Al-Layl (the Night).wav', try_dumped=True, is_target=True)
+	song = app.create_song('Findit/test/97 - Al-Qadar (the Night of Decree)(AL-Khalaf).wav', try_dumped=True, is_target=True)
 	#Find best match
 	app.compare_song(song)
 

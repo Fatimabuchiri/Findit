@@ -301,7 +301,8 @@ def fft(x, window_func, window_size):
 
 	#Use hamming window function if specified
 	if window_func == 'hamming':
-		hamming = signal.hamming(window_size)
+		#hamming = signal.hamming(window_size)
+		hamming = signal.get_window('hamming', window_size)
 		x = np.multiply(hamming, x)
 
 	#Calculate dft
