@@ -243,7 +243,7 @@ class Findit():
 
 		#We could end the search and declare 'no match found' or look for the best option by sorting the number of common notes in descending order and trying the best three
 		if len(songs_to_consider) == 0:
-			print("Couldn't reach threshold. Weak suggestions:")
+			#print("Couldn't reach threshold. Weak suggestions:")
 			sorted_x = sorted(common_targets.items(), key=operator.itemgetter(1), reverse=True)
 			songs_to_consider = [x[0] for x in sorted_x[:3]]
 			#print(sorted_x)
@@ -278,24 +278,24 @@ class Findit():
 				most_notes = deltas[1]
 				best_song = song_name
 
-		if coherent_notes[best_song][0] == 0.0 and len(songs_to_consider) > 1:
-			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
-			print("\n Only the Qari was matched and not the surah",'\n')
+		#if coherent_notes[best_song][0] == 0.0 and len(songs_to_consider) > 1:
+			#print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			#print("\n Only the Qari was matched and not the surah",'\n')
 				
-		elif coherent_notes[best_song][0] > 10.0:
-			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
-			print("\n only the Qari was matched and not the surah",'\n')
+		#if coherent_notes[best_song][0] == 0.0:
+			#print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			#print("\n only the Qari was matched and not the surah",'\n')
 			
-		elif coherent_notes[best_song][0] == 0.0:
-			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
-			print("\n Both the Qari and surah were matched",'\n')
+		if coherent_notes[best_song][0] >= 4.0:
+			print("\nThe Qari is", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'\n')
+			print("\n Match found",'\n')
 		
-		elif (coherent_notes[best_song][0] > 1.0 and coherent_notes[best_song][0] < 5.0) or (coherent_notes[best_song][0] < 0.0):
-			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+		elif coherent_notes[best_song][0] < 0.0 or (coherent_notes[best_song][0] > 1.0 and coherent_notes[best_song][0] <= 3.0):
+			#print("\nThe Qari is", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'\n')
 			print("\n Match not found",'\n')
 			
 		else:
-			print("\n***Best Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'***\n')
+			print("\nThe Qari:", best_song, "with delta in seconds = ", coherent_notes[best_song][0],'\n')
 			
 			#return (best_song, coherent_notes[best_song][0]) 
 			

@@ -16,7 +16,7 @@ print(data)
 
 # Open the file in write-binary mode and overwrite with the empty dictionary
 #with open(database_path, 'wb') as f:
-    #pickle.dump(empty_database, f)
+   # pickle.dump(empty_database, f)
 
 #print("Database has been emptied.")
 
